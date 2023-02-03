@@ -1,0 +1,60 @@
+version: '3.3'
+
+services:
+  eureka-service:
+    depends_on:
+      - sql-database
+    build: ./eureka_service
+    image: team1/eureka-service
+    environment:
+      - SERVER_PORT=8761
+    expose:
+      - "8761"
+
+  gateway-service:
+    depends_on: 
+      - eureka-service
+    build: ./gateway_service
+    image: team1/gateway-service
+    env_file:
+      - spring.env
+    environment:
+      - SERVER_PORT=8080
+    ports:
+      - "8080:8080"
+    entrypoint: ["./wait-for-it.sh", "eureka-service:8761", "--", "java", "org.springframework.boot.loader.JarLauncher"]
+
+  authentication-service:
+    depends_on: 
+      - gateway-service
+    build: ./authentication_service  
+    image: team1/authentication-service
+    env_file:
+      - spring.env
+    environment:
+      - SERVER_PORT=8081
+    expose:
+      - "8081"
+    entrypoint: ["./wait-for-it.sh", "sql-database:3306", "--", "java", "org.springframework.boot.loader.JarLauncher"]
+  
+  backend-service:
+    depends_on: 
+      - gateway-service
+    build: ./backend
+    image: team1/backend-service
+    env_file:
+      - spring.env
+    environment:
+      - SERVER_PORT=8082
+    expose:
+      - "8082"
+    entrypoint: ["./wait-for-it.sh", "sql-database:3306", "--", "java", "org.springframework.boot.loader.JarLauncher"]
+
+  sql-database:
+    image: mysql:5.7
+    env_file:
+      - spring.env
+    expose:
+      - "3306"
+    restart: unless-stopped
+

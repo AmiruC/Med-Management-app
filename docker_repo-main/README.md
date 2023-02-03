@@ -1,3 +1,8 @@
+## The project was built by a team of five developers and stored privately on a seperate repository  
+## For the purpose of showcasing the application it has beeen coppied over the a public repo on my profile as I am one of the developers
+## To run the app follow the below direction:
+
+
 ## Build and run instructions
 
 ## Git related instructions

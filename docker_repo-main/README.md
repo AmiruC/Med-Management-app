@@ -3,6 +3,7 @@
 ## To run the app follow the below direction:
 
 
+
 ## Build and run instructions
 
 ## Git related instructions
@@ -18,7 +19,8 @@ git submodule foreach git pull origin master
 Run the following commands
 ```
 git pull
-git submodule foreach git pull origin master
+git submodule foreach git pull origin master<img width="1330" alt="Screen Shot 2023-03-16 at 2 37 55 pm" src="https://user-images.githubusercontent.com/83331140/225508168-9b22335e-16a2-4cc7-b762-244a21dec47c.png">
+
 ```
 
 ### How to use
